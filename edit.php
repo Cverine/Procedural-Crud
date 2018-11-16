@@ -3,11 +3,10 @@
 require_once 'phpAction/db_connect.php';
 
 if ($_GET['id']) {
-    $id = $_GET['id'];
+    $id = intval($_GET['id']);
 
-    $sql = "SELECT * FROM employee WHERE id = {$id}";
+    $sql = "SELECT * FROM $dbname WHERE id = {$id}";
     $result = $connect->query($sql);
-
     $data = $result->fetch_assoc();
 
     $connect->close();

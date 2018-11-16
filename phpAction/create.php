@@ -2,11 +2,11 @@
 require_once 'db_connect.php';
 
 if ($_POST) {
-    $name = $_POST['name'];
-    $salary = $_POST['salary'];
-    $age = $_POST['age'];
+    $name = mysqli_real_escape_string($connect, $_POST['name']);
+    $salary = mysqli_real_escape_string($connect, $_POST['salary']);;
+    $age = mysqli_real_escape_string($connect, $_POST['age']);
 
-    $sql = "INSERT INTO employee (name, salary, age) VALUES ('$name', '$salary', '$age')";
+    $sql = "INSERT INTO $dbname (name, salary, age) VALUES ('$name', '$salary', '$age')";
     
     if ($connect->query($sql) === true) {
         echo "<p>Employee successfully created</p>";
