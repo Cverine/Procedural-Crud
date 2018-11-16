@@ -3,16 +3,14 @@
 require_once 'db_connect.php';
 
 if ($_POST) {
-    $name = $_POST['name'];
-    $salary = $_POST['salary'];
-    $age = $_POST['age'];
-    $id = $_POST['id'];
+    $name = mysqli_real_escape_string($connect, $_POST['name']);
+    $salary = mysqli_real_escape_string($connect, $_POST['salary']);;
+    $age = mysqli_real_escape_string($connect, $_POST['age']);
+    $id = intval($_POST['id']);
 
-    $sql = "UPDATE employee SET name='$name', salary='$salary', age='$age' WHERE id = {$id}";
+    $sql = "UPDATE $dbname SET name='$name', salary='$salary', age='$age' WHERE id = {$id}";
     if ($connect->query($sql) === true) {
-        echo "<p>Succcessfully Updated</p>";
-        echo "<a href='../edit.php?id=".$id."'><button type='button'>Back</button></a>";
-        echo "<a href='../index.php'><button type='button'>Home</button></a>";
+        $success = "Employee successfully updated !!";
     } else {
         echo "Error while updating record : ". $connect->error;
     }
@@ -22,3 +20,27 @@ if ($_POST) {
 }
  
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee updated</title>
+    <style type="text/css">
+        .manageMember {
+            width: 50%;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="manageMember">
+        <p><?php echo $success ?></p>
+        <a href='../edit.php?id=<?php echo $id ?>'><button type='button'>Back</button></a>
+        <a href='../index.php'><button type='button'>Home</button></a>
+    </div>
+</body>
+</html>
